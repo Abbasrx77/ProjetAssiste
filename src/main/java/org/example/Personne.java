@@ -50,7 +50,7 @@ public class Personne {
     }
 
 
-    private void ObtenirInfos(){
+    public void ObtenirInfos(){
 
     }
 }
