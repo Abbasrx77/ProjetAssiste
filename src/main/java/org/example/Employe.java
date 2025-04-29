@@ -1,41 +1,44 @@
 package org.example;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
 import java.util.Date;
 
-public class Employe extends Personne{
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
+@NoArgsConstructor
+public class Employe extends Personne {
 
-    private int NumeroEmploye;
-    private Date DateEmbauche;
+    private int numeroEmploye;
+    
+    @Temporal(TemporalType.DATE)
+    private Date dateEmbauche;
 
-    public Employe(String Identifiant,
-                   String Nom,
-                   String Adresse,
-                   String Contact,
-                   int NumeroEmploye,
-                   Date DateEmbauche){
-        super(Identifiant, Nom, Adresse, Contact);
-        this.NumeroEmploye = NumeroEmploye;
-        this.DateEmbauche = DateEmbauche;
+    public Employe(String identifiant,
+                   String nom,
+                   String adresse,
+                   String contact,
+                   int numeroEmploye,
+                   Date dateEmbauche){
+        super(identifiant, nom, adresse, contact);
+        this.numeroEmploye = numeroEmploye;
+        this.dateEmbauche = dateEmbauche;
     }
 
-    public Date getDateEmbauche() {
-        return DateEmbauche;
-    }
-
-    public void setDateEmbauche(Date DateEmbauche) {
-        this.DateEmbauche = DateEmbauche;
-    }
-
-    public int getNumeroEmploye() {
-        return NumeroEmploye;
-    }
-
-    public void setNumeroEmploye(int NumeroEmploye) {
-       this.NumeroEmploye = NumeroEmploye;
-    }
-
-
-    public void ObtenirRole(){
-
+    public void obtenirRole(){
+        System.out.println("Rôle de l'employé :");
+        System.out.println("Numéro d'employé : " + this.numeroEmploye);
+        System.out.println("Date d'embauche : " + this.dateEmbauche);
+        if (this instanceof Pilote) {
+            System.out.println("Rôle : Pilote");
+        } else if (this instanceof PersonnelCabine) {
+            System.out.println("Rôle : Personnel de cabine");
+        } else {
+            System.out.println("Rôle : Employé");
+        }
     }
 }

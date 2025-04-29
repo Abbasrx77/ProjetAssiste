@@ -1,56 +1,43 @@
 package org.example;
 
-public class Personne {
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-    private String Identifiant;
-    private String Nom;
-    private String Adresse;
-    private String Contact;
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
+@NoArgsConstructor
+public abstract class Personne {
 
-    public Personne(String Identifiant,
-                    String Nom,
-                    String Adresse,
-                    String Contact){
-        this.Identifiant = Identifiant;
-        this.Nom = Nom;
-        this.Adresse = Adresse;
-        this.Contact = Contact;
-    }
+    @Id
+    private String identifiant;
+    
+    private String nom;
+    private String adresse;
+    private String contact;
 
-    public String getIdentifiant() {
-        return Identifiant;
+    public Personne(String identifiant,
+                    String nom,
+                    String adresse,
+                    String contact){
+        this.identifiant = identifiant;
+        this.nom = nom;
+        this.adresse = adresse;
+        this.contact = contact;
     }
 
     public String getNom() {
-        return Nom;
+        return nom;
     }
 
-    public String getAdresse() {
-        return Adresse;
-    }
-
-    public String getContact() {
-        return Contact;
-    }
-
-    public void setIdentifiant(String Identifiant) {
-        this.Identifiant = Identifiant;
-    }
-
-    public void setNom(String Nom) {
-        this.Nom = Nom;
-    }
-
-    public void setAdresse(String Adresse) {
-        this.Adresse = Adresse;
-    }
-
-    public void setContact(String Contact) {
-        this.Contact = Contact;
-    }
-
-
-    public void ObtenirInfos(){
-
+    public void obtenirInfos(){
+        System.out.println("Informations de la personne :");
+        System.out.println("Identifiant : " + this.identifiant);
+        System.out.println("Nom : " + this.nom);
+        System.out.println("Adresse : " + this.adresse);
+        System.out.println("Contact : " + this.contact);
     }
 }

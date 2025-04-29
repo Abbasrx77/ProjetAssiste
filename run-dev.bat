@@ -1,0 +1,3 @@
+@echo off
+echo Demarrage de l'application en mode developpement...
+mvn spring-boot:run -Dspring-boot.run.profiles=dev 

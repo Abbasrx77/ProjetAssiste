@@ -1,67 +1,64 @@
 package org.example;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Aeroport {
 
-    private String Nom;
-    private String Ville;
-    private String Description;
-    private List<Vol> volsDepart;
-    private List<Vol> volsArrives;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String nom;
+    private String ville;
+    private String description;
+    
+    @OneToMany(mappedBy = "origine", cascade = CascadeType.ALL)
+    private List<Vol> volsDepart = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
+    private List<Vol> volsArrives = new ArrayList<>();
 
-    public Aeroport(String Nom,
-                    String Ville,
-                    String Description){
-        this.Nom = Nom;
-        this.Ville = Ville;
-        this.Description = Description;
-        this.volsDepart = new ArrayList<>();
-        this.volsArrives = new ArrayList<>();
+    public Aeroport(String nom,
+                    String ville,
+                    String description){
+        this.nom = nom;
+        this.ville = ville;
+        this.description = description;
     }
 
-    public String getNom() {
-        return Nom;
+    public void affecterVol(Vol vol, boolean estDepart){
+        if (estDepart) {
+            this.volsDepart.add(vol);
+            vol.setOrigine(this);
+            System.out.println("Vol " + vol.getNumeroVol() + " ajouté aux départs de " + this.nom);
+        } else {
+            this.volsArrives.add(vol);
+            vol.setDestination(this);
+            System.out.println("Vol " + vol.getNumeroVol() + " ajouté aux arrivées de " + this.nom);
+        }
     }
 
-    public void setNom(String nom) {
-        this.Nom = nom;
+    public boolean verifierCreneauDisponible(Date date, boolean estDepart){
+        List<Vol> vols = estDepart ? volsDepart : volsArrives;
+        return vols.stream().noneMatch(v -> 
+            (date.after(v.getDateHeureDepart()) && date.before(v.getDateHeureArrivee())) ||
+            date.equals(v.getDateHeureDepart()) || 
+            date.equals(v.getDateHeureArrivee())
+        );
     }
 
-    public String getVille() {
-        return Ville;
-    }
-
-    public void setVille(String ville) {
-        this.Ville = ville;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        this.Description = description;
-    }
-
-    public List<Vol> getVolsDepart() {
-        return volsDepart;
-    }
-
-    public void setVolsDepart(List<Vol> volsDepart) {
-        this.volsDepart = volsDepart;
-    }
-
-    public List<Vol> getVolsArrives() {
-        return volsArrives;
-    }
-
-    public void setVolsArrives(List<Vol> volsArrives) {
-        this.volsArrives = volsArrives;
-    }
-
-    public void affecterVol(){
-
+    @Override
+    public String toString() {
+        return this.nom + " (" + this.ville + ")";
     }
 }

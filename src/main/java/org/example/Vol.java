@@ -1,96 +1,122 @@
 package org.example;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Vol {
+    @Id
     private String numeroVol;
-    private Aeroport Origine;
-    private Aeroport Destination;
-    private Date DateHeureDepart;
-    private Date DateHeureArrivee;
-    private String Etat;
+    
+    @ManyToOne
+    @JoinColumn(name = "origine_id")
+    private Aeroport origine;
+    
+    @ManyToOne
+    @JoinColumn(name = "destination_id")
+    private Aeroport destination;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateHeureDepart;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateHeureArrivee;
+    
+    private String etat;
+    
+    @ManyToOne
+    @JoinColumn(name = "avion_id")
     private Avion avion;
-    private List<Reservation> reservations;
+    
+    @ManyToOne
+    @JoinColumn(name = "pilote_id")
+    private Pilote pilote;
+    
+    @ManyToMany(mappedBy = "vols")
+    private List<PersonnelCabine> personnelCabine = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "vol", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations = new ArrayList<>();
 
     public Vol(String numeroVol,
-               Aeroport Origine,
-               Aeroport Destination,
-               Date DateHeureDepart,
-               Date DateHeureArrivee,
-               String Etat){
+               Aeroport origine,
+               Aeroport destination,
+               Date dateHeureDepart,
+               Date dateHeureArrivee,
+               String etat){
         this.numeroVol = numeroVol;
-        this.Origine = Origine;
-        this.Destination = Destination;
-        this.DateHeureDepart = DateHeureDepart;
-        this.DateHeureArrivee = DateHeureArrivee;
-        this.Etat = Etat;
-        this.reservations = new ArrayList<>();
+        this.origine = origine;
+        this.destination = destination;
+        this.dateHeureDepart = dateHeureDepart;
+        this.dateHeureArrivee = dateHeureArrivee;
+        this.etat = etat;
     }
 
     public String getNumeroVol() {
         return numeroVol;
     }
-
-    public void setNumeroVol(String numeroVol) {
-        this.numeroVol = numeroVol;
-    }
-
-    public String getOrigine() {
-        return Origine.toString();
-    }
-
-    public void setOrigine(Aeroport origine) {
-        this.Origine = origine;
-    }
-
-    public Aeroport getDestination() {
-        return Destination;
-    }
-
-    public void setDestination(Aeroport destination) {
-        this.Destination = destination;
-    }
-
-    public Date getDateHeureDepart() {
-        return DateHeureDepart;
-    }
-
-    public void setDateHeureDepart(Date dateHeureDepart) {
-        this.DateHeureDepart = dateHeureDepart;
-    }
-
-    public Date getDateHeureArrivee() {
-        return DateHeureArrivee;
-    }
-
-    public void setDateHeureArrivee(Date dateHeureArrivee) {
-        this.DateHeureArrivee = dateHeureArrivee;
-    }
-
+    
     public String getEtat() {
-        return Etat;
+        return etat;
+    }
+    
+    public Date getDateHeureDepart() {
+        return dateHeureDepart;
+    }
+    
+    public Date getDateHeureArrivee() {
+        return dateHeureArrivee;
+    }
+    
+    public void setAvion(Avion avion) {
+        this.avion = avion;
     }
 
-    public void setEtat(String etat) {
-        this.Etat = etat;
-    }
-
-    public void planifierVol(){
-
+    public void planifierVol(Avion avion, Pilote pilote, List<PersonnelCabine> personnelCabine){
+        this.avion = avion;
+        this.pilote = pilote;
+        this.personnelCabine.clear();
+        this.personnelCabine.addAll(personnelCabine);
+        this.etat = "Planifié";
+        System.out.println("Vol " + this.numeroVol + " planifié avec succès");
+        System.out.println("Avion : " + avion.getModele());
+        System.out.println("Pilote : " + pilote.getNom());
+        System.out.println("Personnel de cabine : " + personnelCabine.size() + " membres");
     }
 
     public void annulerVol(){
-
+        this.etat = "Annulé";
+        for (Reservation reservation : reservations) {
+            reservation.annulerReservation();
+        }
+        System.out.println("Vol " + this.numeroVol + " annulé");
     }
 
-    public void modifierVol(){
-
+    public void modifierVol(Date nouvelleDateDepart, Date nouvelleDateArrivee){
+        this.dateHeureDepart = nouvelleDateDepart;
+        this.dateHeureArrivee = nouvelleDateArrivee;
+        System.out.println("Vol " + this.numeroVol + " modifié");
+        System.out.println("Nouvelle date de départ : " + nouvelleDateDepart);
+        System.out.println("Nouvelle date d'arrivée : " + nouvelleDateArrivee);
     }
 
     public void ListingPassager(){
-
+        System.out.println("Liste des passagers pour le vol " + this.numeroVol + " :");
+        for (Reservation reservation : reservations) {
+            Passager passager = reservation.getPassager();
+            System.out.println("Passager : " + passager.getNom());
+            System.out.println("Classe : " + reservation.getClasse());
+            System.out.println("Siège : " + reservation.getSiege());
+            System.out.println("-------------------");
+        }
     }
 }
 

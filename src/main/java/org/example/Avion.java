@@ -1,48 +1,53 @@
 package org.example;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Avion {
-    private String Immatriculation;
-    private String Modele;
-    private int Capacite;
-    private Vol vol;
+    @Id
+    private String immatriculation;
+    
+    private String modele;
+    private int capacite;
+    
+    @OneToMany(mappedBy = "avion", cascade = CascadeType.ALL)
+    private List<Vol> vols = new ArrayList<>();
 
-    public Avion(String Immatriculation,
-                 String Modele,
-                 int Capacite){
-        this.Immatriculation = Immatriculation;
-        this.Modele = Modele;
-        this.Capacite = Capacite;
-    }
-
-    public String getImmatriculation() {
-        return Immatriculation;
-    }
-
-    public void setImmatriculation(String Immatriculation) {
-        this.Immatriculation = Immatriculation;
+    public Avion(String immatriculation,
+                 String modele,
+                 int capacite){
+        this.immatriculation = immatriculation;
+        this.modele = modele;
+        this.capacite = capacite;
     }
 
     public String getModele() {
-        return Modele;
+        return modele;
     }
 
-    public void setModele(String Modele) {
-        this.Modele = Modele;
+    public void affecterVol(Vol vol){
+        if (verifierDisponibilite(vol.getDateHeureDepart(), vol.getDateHeureArrivee())) {
+            this.vols.add(vol);
+            vol.setAvion(this);
+            System.out.println("Avion " + this.immatriculation + " affecté au vol " + vol.getNumeroVol());
+        } else {
+            System.out.println("L'avion " + this.immatriculation + " n'est pas disponible pour ce vol");
+        }
     }
 
-    public int getCapacite() {
-        return Capacite;
-    }
-
-    public void setCapacite(int Capacite) {
-        this.Capacite = Capacite;
-    }
-
-    public void affecterVol(){
-
-    }
-
-    public void verifierDisponibilite(){
-
+    public boolean verifierDisponibilite(Date dateDebut, Date dateFin){
+        // Vérifie si l'avion est disponible pour le créneau demandé
+        return vols.stream().noneMatch(vol -> 
+            (dateDebut.before(vol.getDateHeureArrivee()) && dateFin.after(vol.getDateHeureDepart()))
+        );
     }
 }
