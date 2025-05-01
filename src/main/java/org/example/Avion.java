@@ -45,7 +45,7 @@ public class Avion {
     }
 
     public boolean verifierDisponibilite(Date dateDebut, Date dateFin){
-        // Vérifie si l'avion est disponible pour le créneau demandé
+        
         return vols.stream().noneMatch(vol -> 
             (dateDebut.before(vol.getDateHeureArrivee()) && dateFin.after(vol.getDateHeureDepart()))
         );

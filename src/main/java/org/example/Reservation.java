@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 
 @Entity
@@ -22,10 +23,12 @@ public class Reservation {
     private String classe;
     private String siege;
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "passager_id")
     private Passager passager;
     
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "vol_id")
     private Vol vol;

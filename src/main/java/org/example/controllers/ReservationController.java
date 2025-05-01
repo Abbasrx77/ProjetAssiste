@@ -27,13 +27,62 @@ public class ReservationController {
     @Autowired
     private VolRepository volRepository;
 
-    // Liste toutes les réservations
+    // Classe DTO pour la création de réservation
+    public static class ReservationDTO {
+        private String passagerId;
+        private String volId;
+        private String classe;
+        private String siege;
+        private String statut;
+
+        public String getPassagerId() {
+            return passagerId;
+        }
+
+        public void setPassagerId(String passagerId) {
+            this.passagerId = passagerId;
+        }
+
+        public String getVolId() {
+            return volId;
+        }
+
+        public void setVolId(String volId) {
+            this.volId = volId;
+        }
+
+        public String getClasse() {
+            return classe;
+        }
+
+        public void setClasse(String classe) {
+            this.classe = classe;
+        }
+
+        public String getSiege() {
+            return siege;
+        }
+
+        public void setSiege(String siege) {
+            this.siege = siege;
+        }
+
+        public String getStatut() {
+            return statut;
+        }
+
+        public void setStatut(String statut) {
+            this.statut = statut;
+        }
+    }
+
+   
     @GetMapping
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
 
-    // Recherche une réservation par son numéro
+    
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable int id) {
         Optional<Reservation> reservation = reservationRepository.findById(id);
@@ -41,29 +90,29 @@ public class ReservationController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Recherche des réservations par passager
+    
     @GetMapping("/passager/{passagerId}")
     public List<Reservation> getReservationsByPassager(@PathVariable String passagerId) {
         return reservationRepository.findByPassager_Identifiant(passagerId);
     }
 
-    // Recherche des réservations par vol
+    
     @GetMapping("/vol/{volId}")
     public List<Reservation> getReservationsByVol(@PathVariable String volId) {
         return reservationRepository.findByVol_NumeroVol(volId);
     }
 
-    // Recherche des réservations par statut
+    
     @GetMapping("/statut/{statut}")
     public List<Reservation> getReservationsByStatut(@PathVariable String statut) {
         return reservationRepository.findByStatut(statut);
     }
 
-    // Crée une nouvelle réservation
+    
     @PostMapping
-    public ResponseEntity<?> createReservation(@RequestBody Reservation reservation) {
-        Optional<Passager> passagerOpt = passagerRepository.findById(reservation.getPassager().getIdentifiant());
-        Optional<Vol> volOpt = volRepository.findById(reservation.getVol().getNumeroVol());
+    public ResponseEntity<?> createReservation(@RequestBody ReservationDTO reservationDTO) {
+        Optional<Passager> passagerOpt = passagerRepository.findById(reservationDTO.getPassagerId());
+        Optional<Vol> volOpt = volRepository.findById(reservationDTO.getVolId());
         
         if (passagerOpt.isPresent() && volOpt.isPresent()) {
             Passager passager = passagerOpt.get();
@@ -73,7 +122,7 @@ public class ReservationController {
                 return ResponseEntity.badRequest().body("Le vol a été annulé");
             }
             
-            Reservation nouvelleReservation = new Reservation(passager, vol, reservation.getClasse(), reservation.getSiege());
+            Reservation nouvelleReservation = new Reservation(passager, vol, reservationDTO.getClasse(), reservationDTO.getSiege());
             nouvelleReservation = reservationRepository.save(nouvelleReservation);
             return new ResponseEntity<>(nouvelleReservation, HttpStatus.CREATED);
         }
@@ -81,7 +130,7 @@ public class ReservationController {
         return ResponseEntity.badRequest().body("Passager ou vol non trouvé");
     }
 
-    // Confirme une réservation
+   
     @PostMapping("/{id}/confirmer")
     public ResponseEntity<Void> confirmerReservation(@PathVariable int id) {
         return reservationRepository.findById(id)
@@ -93,7 +142,7 @@ public class ReservationController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Annule une réservation
+   
     @PostMapping("/{id}/annuler")
     public ResponseEntity<Void> annulerReservation(@PathVariable int id) {
         return reservationRepository.findById(id)
@@ -105,7 +154,7 @@ public class ReservationController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Modifie une réservation (classe et siège)
+    
     @PutMapping("/{id}")
     public ResponseEntity<Void> modifierReservation(
             @PathVariable int id,
@@ -121,7 +170,7 @@ public class ReservationController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Supprime une réservation
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable int id) {
         return reservationRepository.findById(id)

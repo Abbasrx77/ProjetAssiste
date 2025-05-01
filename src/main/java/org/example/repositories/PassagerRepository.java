@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PassagerRepository extends JpaRepository<Passager, String> {
-    // Méthodes spécifiques pour les recherches personnalisées
+    
     Passager findByPasseport(String passeport);
 } 

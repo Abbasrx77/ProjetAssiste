@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,9 +23,11 @@ public class Aeroport {
     private String ville;
     private String description;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "origine", cascade = CascadeType.ALL)
     private List<Vol> volsDepart = new ArrayList<>();
     
+    @JsonIgnore
     @OneToMany(mappedBy = "destination", cascade = CascadeType.ALL)
     private List<Vol> volsArrives = new ArrayList<>();
 

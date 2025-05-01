@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -14,7 +16,8 @@ import java.util.Date;
 public class Employe extends Personne {
 
     private int numeroEmploye;
-    
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date dateEmbauche;
 

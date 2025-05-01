@@ -1,0 +1,971 @@
+{
+  "info": {
+    "name": "API Gestion Aérienne",
+    "description": "Collection des endpoints de l'API de gestion de système de réservation aérienne",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Aéroports",
+      "item": [
+        {
+          "name": "1.1 Créer aéroport Paris",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/aeroports",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "aeroports"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Aéroport de Paris\",\n  \"ville\": \"Paris\",\n  \"description\": \"Aéroport international de Paris\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.2 Créer aéroport New York",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/aeroports",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "aeroports"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Aéroport de New York\",\n  \"ville\": \"New York\",\n  \"description\": \"Aéroport international de New York\"\n}"
+            }
+          }
+        },
+        {
+          "name": "1.3 Liste des aéroports",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/aeroports",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "aeroports"]
+            }
+          }
+        },
+        {
+          "name": "1.4 Obtenir un aéroport par ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/aeroports/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "aeroports", "1"]
+            }
+          }
+        },
+        {
+          "name": "1.5 Obtenir un aéroport par nom",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/aeroports/nom/Aéroport de Paris",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "aeroports", "nom", "Aéroport de Paris"]
+            }
+          }
+        },
+        {
+          "name": "1.6 Obtenir des aéroports par ville",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/aeroports/ville/Paris",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "aeroports", "ville", "Paris"]
+            }
+          }
+        },
+        {
+          "name": "1.7 Mettre à jour un aéroport",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:8081/api/aeroports/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "aeroports", "1"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Charles de Gaulle\",\n  \"ville\": \"Paris\",\n  \"description\": \"Aéroport international de Paris-Charles de Gaulle\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Avions",
+      "item": [
+        {
+          "name": "2.1 Créer un avion",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/avions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "avions"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"immatriculation\": \"A380-001\",\n  \"modele\": \"Airbus A380\",\n  \"capacite\": 500\n}"
+            }
+          }
+        },
+        {
+          "name": "2.2 Liste des avions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/avions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "avions"]
+            }
+          }
+        },
+        {
+          "name": "2.3 Obtenir un avion par immatriculation",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/avions/A380-001",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "avions", "A380-001"]
+            }
+          }
+        },
+        {
+          "name": "2.4 Avions par modèle",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/avions/modele/Airbus A380",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "avions", "modele", "Airbus A380"]
+            }
+          }
+        },
+        {
+          "name": "2.5 Avions par capacité minimale",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/avions/capacite?capaciteMin=300",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "avions", "capacite"],
+              "query": [
+                {
+                  "key": "capaciteMin",
+                  "value": "300"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "2.6 Mettre à jour un avion",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:8081/api/avions/A380-001",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "avions", "A380-001"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modele\": \"Airbus A380\",\n  \"capacite\": 550\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Personnel",
+      "item": [
+        {
+          "name": "3.1 Pilotes",
+          "item": [
+            {
+              "name": "3.1.1 Créer un pilote",
+              "request": {
+                "method": "POST",
+                "url": {
+                  "raw": "http://localhost:8081/api/pilotes",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "pilotes"]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifiant\": \"PIL001\",\n  \"nom\": \"Martin Jacques\",\n  \"adresse\": \"12 Rue des Aviateurs, 75010 Paris\",\n  \"contact\": \"0123456789\",\n  \"numeroEmploye\": 12345,\n  \"dateEmbauche\": \"2010-05-20\",\n  \"licence\": \"A380, B747\",\n  \"heuresDeVol\": 5000\n}"
+                }
+              }
+            },
+            {
+              "name": "3.1.2 Liste des pilotes",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:8081/api/pilotes",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "pilotes"]
+                }
+              }
+            },
+            {
+              "name": "3.1.3 Obtenir un pilote par ID",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:8081/api/pilotes/PIL001",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "pilotes", "PIL001"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "3.2 Personnel de Cabine",
+          "item": [
+            {
+              "name": "3.2.1 Créer membre du personnel 1",
+              "request": {
+                "method": "POST",
+                "url": {
+                  "raw": "http://localhost:8081/api/personnel-cabine",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "personnel-cabine"]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifiant\": \"PC001\",\n  \"nom\": \"Dubois Marie\",\n  \"adresse\": \"8 Avenue du Ciel, 75015 Paris\",\n  \"contact\": \"0123456789\",\n  \"numeroEmploye\": 67890,\n  \"dateEmbauche\": \"2015-03-10\",\n  \"qualification\": \"Chef de cabine\"\n}"
+                }
+              }
+            },
+            {
+              "name": "3.2.2 Créer membre du personnel 2",
+              "request": {
+                "method": "POST",
+                "url": {
+                  "raw": "http://localhost:8081/api/personnel-cabine",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "personnel-cabine"]
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifiant\": \"PC002\",\n  \"nom\": \"Laurent Sophie\",\n  \"adresse\": \"25 Rue du Ciel, 75016 Paris\",\n  \"contact\": \"0123456788\",\n  \"numeroEmploye\": 67891,\n  \"dateEmbauche\": \"2016-04-15\",\n  \"qualification\": \"Hôtesse de l'air\"\n}"
+                }
+              }
+            },
+            {
+              "name": "3.2.3 Liste du personnel de cabine",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "http://localhost:8081/api/personnel-cabine",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "personnel-cabine"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Passagers",
+      "item": [
+        {
+          "name": "4.1 Créer un passager",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/passagers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "passagers"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifiant\": \"P12345\",\n  \"nom\": \"Dupont Jean\",\n  \"adresse\": \"15 Rue de Paris, 75001 Paris\",\n  \"contact\": \"0123456789\",\n  \"passeport\": \"AB123456\"\n}"
+            }
+          }
+        },
+        {
+          "name": "4.2 Liste des passagers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/passagers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "passagers"]
+            }
+          }
+        },
+        {
+          "name": "4.3 Obtenir un passager par ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/passagers/P12345",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "passagers", "P12345"]
+            }
+          }
+        },
+        {
+          "name": "4.4 Mettre à jour un passager",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:8081/api/passagers/P12345",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "passagers", "P12345"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Dupont Jean-Pierre\",\n  \"adresse\": \"15 Rue de Paris, 75001 Paris\",\n  \"contact\": \"0123456789\",\n  \"passeport\": \"AB123456\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Vols",
+      "item": [
+        {
+          "name": "5.1 Créer un vol",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/vols",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numeroVol\": \"AF123\",\n  \"origine\": {\n    \"id\": 1\n  },\n  \"destination\": {\n    \"id\": 2\n  },\n  \"dateHeureDepart\": \"2023-10-15T08:00:00\",\n  \"dateHeureArrivee\": \"2023-10-15T20:00:00\",\n  \"etat\": \"Planifié\"\n}"
+            }
+          }
+        },
+        {
+          "name": "5.2 Liste des vols",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/vols",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols"]
+            }
+          }
+        },
+        {
+          "name": "5.3 Obtenir un vol par ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/vols/AF123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols", "AF123"]
+            }
+          }
+        },
+        {
+          "name": "5.4 Planifier un vol",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/vols/AF123/planifier?avionId=A380-001&piloteId=PIL001&personnelCabineIds=PC001&personnelCabineIds=PC002",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols", "AF123", "planifier"],
+              "query": [
+                {
+                  "key": "avionId",
+                  "value": "A380-001"
+                },
+                {
+                  "key": "piloteId",
+                  "value": "PIL001"
+                },
+                {
+                  "key": "personnelCabineIds",
+                  "value": "PC001"
+                },
+                {
+                  "key": "personnelCabineIds",
+                  "value": "PC002"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "5.5 Rechercher vols par ville de départ",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/vols/depart/Paris",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols", "depart", "Paris"]
+            }
+          }
+        },
+        {
+          "name": "5.6 Rechercher vols par ville de destination",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/vols/destination/New York",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols", "destination", "New York"]
+            }
+          }
+        },
+        {
+          "name": "5.7 Rechercher vols par date",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/vols/date?date=2023-10-15",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols", "date"],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2023-10-15"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "5.8 Rechercher vols par état",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/vols/etat/Planifié",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols", "etat", "Planifié"]
+            }
+          }
+        },
+        {
+          "name": "5.9 Mettre à jour un vol",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:8081/api/vols/AF123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols", "AF123"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origine\": {\n    \"id\": 1\n  },\n  \"destination\": {\n    \"id\": 2\n  },\n  \"dateHeureDepart\": \"2023-10-15T09:00:00\",\n  \"dateHeureArrivee\": \"2023-10-15T21:00:00\",\n  \"etat\": \"Planifié\"\n}"
+            }
+          }
+        },
+        {
+          "name": "5.10 Modifier dates d'un vol",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:8081/api/vols/AF123/dates?dateDepart=2023-10-15T10:00:00&dateArrivee=2023-10-15T22:00:00",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols", "AF123", "dates"],
+              "query": [
+                {
+                  "key": "dateDepart",
+                  "value": "2023-10-15T10:00:00"
+                },
+                {
+                  "key": "dateArrivee",
+                  "value": "2023-10-15T22:00:00"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Réservations",
+      "item": [
+        {
+          "name": "6.1 Créer une réservation",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/reservations",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "reservations"]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"passagerId\": \"P12345\",\n  \"volId\": \"AF123\",\n  \"classe\": \"Economique\",\n  \"siege\": \"15A\",\n  \"statut\": \"En attente\"\n}"
+            }
+          }
+        },
+        {
+          "name": "6.2 Réserver un vol pour un passager (méthode alternative)",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/passagers/P12345/reservations?volId=AF123&classe=Economique&siege=12B",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "passagers", "P12345", "reservations"],
+              "query": [
+                {
+                  "key": "volId",
+                  "value": "AF123"
+                },
+                {
+                  "key": "classe",
+                  "value": "Economique"
+                },
+                {
+                  "key": "siege",
+                  "value": "12B"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "6.3 Liste des réservations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/reservations",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "reservations"]
+            }
+          }
+        },
+        {
+          "name": "6.4 Obtenir une réservation par ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/reservations/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "reservations", "1"]
+            }
+          }
+        },
+        {
+          "name": "6.5 Réservations par passager",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/reservations/passager/P12345",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "reservations", "passager", "P12345"]
+            }
+          }
+        },
+        {
+          "name": "6.6 Réservations par vol",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/reservations/vol/AF123",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "reservations", "vol", "AF123"]
+            }
+          }
+        },
+        {
+          "name": "6.7 Confirmer une réservation",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/reservations/1/confirmer",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "reservations", "1", "confirmer"]
+            }
+          }
+        },
+        {
+          "name": "6.8 Modifier une réservation",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "http://localhost:8081/api/reservations/1?nouvelleClasse=Affaires&nouveauSiege=3A",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "reservations", "1"],
+              "query": [
+                {
+                  "key": "nouvelleClasse",
+                  "value": "Affaires"
+                },
+                {
+                  "key": "nouveauSiege",
+                  "value": "3A"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "6.9 Réservations par statut",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8081/api/reservations/statut/Confirmée",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "reservations", "statut", "Confirmée"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Actions sensibles (à lancer manuellement)",
+      "item": [
+        {
+          "name": "7.1 Annuler un vol",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/vols/AF123/annuler",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "vols", "AF123", "annuler"]
+            }
+          }
+        },
+        {
+          "name": "7.2 Annuler une réservation",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "http://localhost:8081/api/reservations/1/annuler",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8081",
+              "path": ["api", "reservations", "1", "annuler"]
+            }
+          }
+        },
+        {
+          "name": "7.3 Supprimer dans cet ordre (ordre correct de suppression)",
+          "item": [
+            {
+              "name": "7.3.1 Supprimer les réservations",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:8081/api/reservations/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "reservations", "1"]
+                }
+              }
+            },
+            {
+              "name": "7.3.2 Supprimer les réservations pour un passager",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:8081/api/passagers/P12345/reservations/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "passagers", "P12345", "reservations", "1"]
+                }
+              }
+            },
+            {
+              "name": "7.3.3 Supprimer le vol",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:8081/api/vols/AF123",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "vols", "AF123"]
+                }
+              }
+            },
+            {
+              "name": "7.3.4 Supprimer le passager",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:8081/api/passagers/P12345",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "passagers", "P12345"]
+                }
+              }
+            },
+            {
+              "name": "7.3.5 Supprimer le personnel de cabine",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:8081/api/personnel-cabine/PC001",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "personnel-cabine", "PC001"]
+                }
+              }
+            },
+            {
+              "name": "7.3.6 Supprimer le pilote",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:8081/api/pilotes/PIL001",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "pilotes", "PIL001"]
+                }
+              }
+            },
+            {
+              "name": "7.3.7 Supprimer l'avion",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:8081/api/avions/A380-001",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "avions", "A380-001"]
+                }
+              }
+            },
+            {
+              "name": "7.3.8 Supprimer l'aéroport",
+              "request": {
+                "method": "DELETE",
+                "url": {
+                  "raw": "http://localhost:8081/api/aeroports/1",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "8081",
+                  "path": ["api", "aeroports", "1"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "volId",
+      "value": "AF123"
+    },
+    {
+      "key": "passagerId",
+      "value": "P12345"
+    },
+    {
+      "key": "reservationId",
+      "value": "1"
+    },
+    {
+      "key": "aeroportId",
+      "value": "1"
+    },
+    {
+      "key": "nomAeroport",
+      "value": "Aéroport de Paris"
+    },
+    {
+      "key": "avionImmatriculation",
+      "value": "A380-001"
+    },
+    {
+      "key": "piloteId",
+      "value": "PIL001"
+    },
+    {
+      "key": "personnelId",
+      "value": "PC001"
+    },
+    {
+      "key": "personnelId1",
+      "value": "PC001"
+    },
+    {
+      "key": "personnelId2",
+      "value": "PC002"
+    }
+  ]
+} 

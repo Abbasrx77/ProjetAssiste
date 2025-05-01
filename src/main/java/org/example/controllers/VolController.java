@@ -3,6 +3,7 @@ package org.example.controllers;
 import org.example.Avion;
 import org.example.Pilote;
 import org.example.PersonnelCabine;
+import org.example.Reservation;
 import org.example.Vol;
 import org.example.repositories.AvionRepository;
 import org.example.repositories.PiloteRepository;
@@ -34,13 +35,13 @@ public class VolController {
     @Autowired
     private PersonnelCabineRepository personnelCabineRepository;
 
-    // Liste tous les vols
+   
     @GetMapping
     public List<Vol> getAllVols() {
         return volRepository.findAll();
     }
 
-    // Recherche un vol par son numéro
+   
     @GetMapping("/{id}")
     public ResponseEntity<Vol> getVolById(@PathVariable String id) {
         Optional<Vol> vol = volRepository.findById(id);
@@ -48,14 +49,14 @@ public class VolController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Crée un nouveau vol
+
     @PostMapping
     public ResponseEntity<Vol> createVol(@RequestBody Vol vol) {
         Vol nouveauVol = volRepository.save(vol);
         return new ResponseEntity<>(nouveauVol, HttpStatus.CREATED);
     }
 
-    // Met à jour un vol existant
+    
     @PutMapping("/{id}")
     public ResponseEntity<Vol> updateVol(@PathVariable String id, @RequestBody Vol volDetails) {
         return volRepository.findById(id)
@@ -71,43 +72,70 @@ public class VolController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Supprime un vol
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVol(@PathVariable String id) {
         return volRepository.findById(id)
                 .map(vol -> {
+                    
+                    for (Reservation reservation : vol.getReservations()) {
+                        reservation.annulerReservation();
+                    }
+                    
+                    
+                    if (vol.getPersonnelCabine() != null) {
+                        vol.getPersonnelCabine().forEach(pc -> pc.getVols().remove(vol));
+                    }
+                    
+                    
+                    if (vol.getAvion() != null) {
+                        vol.getAvion().getVols().remove(vol);
+                    }
+                    
+                    if (vol.getPilote() != null) {
+                        vol.getPilote().getVols().remove(vol);
+                    }
+                    
+                    
+                    vol.setAvion(null);
+                    vol.setPilote(null);
+                    vol.setOrigine(null);
+                    vol.setDestination(null);
+                    vol.getPersonnelCabine().clear();
+                    
+                   
                     volRepository.delete(vol);
                     return ResponseEntity.ok().<Void>build();
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Recherche les vols par ville d'origine
+   
     @GetMapping("/depart/{ville}")
     public List<Vol> getVolsByVilleDepart(@PathVariable String ville) {
         return volRepository.findByOrigine_Ville(ville);
     }
 
-    // Recherche les vols par ville de destination
+    
     @GetMapping("/destination/{ville}")
     public List<Vol> getVolsByVilleDestination(@PathVariable String ville) {
         return volRepository.findByDestination_Ville(ville);
     }
 
-    // Recherche les vols par date de départ (après une date donnée)
+   
     @GetMapping("/date")
     public List<Vol> getVolsByDateDepart(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         return volRepository.findByDateHeureDepartAfter(date);
     }
 
-    // Recherche les vols par état
+   
     @GetMapping("/etat/{etat}")
     public List<Vol> getVolsByEtat(@PathVariable String etat) {
         return volRepository.findByEtat(etat);
     }
 
-    // Planifie un vol avec un avion et un équipage
+    
     @PostMapping("/{volId}/planifier")
     public ResponseEntity<?> planifierVol(
             @PathVariable String volId,
@@ -146,7 +174,7 @@ public class VolController {
         return ResponseEntity.notFound().build();
     }
 
-    // Annule un vol
+    
     @PostMapping("/{volId}/annuler")
     public ResponseEntity<Void> annulerVol(@PathVariable String volId) {
         return volRepository.findById(volId)
@@ -158,7 +186,7 @@ public class VolController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Modifie les dates d'un vol
+   
     @PutMapping("/{volId}/dates")
     public ResponseEntity<Void> modifierDatesVol(
             @PathVariable String volId,

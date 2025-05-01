@@ -17,13 +17,13 @@ public class PersonnelCabineController {
     @Autowired
     private PersonnelCabineRepository personnelCabineRepository;
 
-    // Liste tout le personnel de cabine
+    
     @GetMapping
     public List<PersonnelCabine> getAllPersonnelCabine() {
         return personnelCabineRepository.findAll();
     }
 
-    // Recherche un membre du personnel de cabine par son identifiant
+   
     @GetMapping("/{id}")
     public ResponseEntity<PersonnelCabine> getPersonnelCabineById(@PathVariable String id) {
         Optional<PersonnelCabine> personnelCabine = personnelCabineRepository.findById(id);
@@ -31,20 +31,20 @@ public class PersonnelCabineController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Recherche du personnel de cabine par qualification
+    
     @GetMapping("/qualification/{qualification}")
     public List<PersonnelCabine> getPersonnelCabineByQualification(@PathVariable String qualification) {
         return personnelCabineRepository.findByQualification(qualification);
     }
 
-    // Crée un nouveau membre du personnel de cabine
+    
     @PostMapping
     public ResponseEntity<PersonnelCabine> createPersonnelCabine(@RequestBody PersonnelCabine personnelCabine) {
         PersonnelCabine nouveauPersonnelCabine = personnelCabineRepository.save(personnelCabine);
         return new ResponseEntity<>(nouveauPersonnelCabine, HttpStatus.CREATED);
     }
 
-    // Met à jour un membre du personnel de cabine existant
+    
     @PutMapping("/{id}")
     public ResponseEntity<PersonnelCabine> updatePersonnelCabine(@PathVariable String id, @RequestBody PersonnelCabine personnelCabineDetails) {
         return personnelCabineRepository.findById(id)
@@ -61,7 +61,7 @@ public class PersonnelCabineController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Supprime un membre du personnel de cabine
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePersonnelCabine(@PathVariable String id) {
         return personnelCabineRepository.findById(id)

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface PiloteRepository extends JpaRepository<Pilote, String> {
-    // Méthodes spécifiques pour les recherches personnalisées
+   
     List<Pilote> findByLicence(String licence);
     List<Pilote> findByHeuresDeVolGreaterThan(double heuresMinimales);
 } 

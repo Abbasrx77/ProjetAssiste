@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface PersonnelCabineRepository extends JpaRepository<PersonnelCabine, String> {
-    // Méthodes spécifiques pour les recherches personnalisées
+   
     List<PersonnelCabine> findByQualification(String qualification);
 } 

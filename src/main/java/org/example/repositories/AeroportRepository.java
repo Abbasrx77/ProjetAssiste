@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface AeroportRepository extends JpaRepository<Aeroport, Long> {
-    // Méthodes spécifiques pour les recherches personnalisées
+    
     Aeroport findByNom(String nom);
     List<Aeroport> findByVille(String ville);
 } 

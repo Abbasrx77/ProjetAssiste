@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface AvionRepository extends JpaRepository<Avion, String> {
-    // Méthodes spécifiques pour les recherches personnalisées
+    
     List<Avion> findByModele(String modele);
     List<Avion> findByCapaciteGreaterThanEqual(int capaciteMinimale);
 } 

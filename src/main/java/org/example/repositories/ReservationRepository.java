@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
-    // Méthodes spécifiques pour les recherches personnalisées
+    
     List<Reservation> findByPassager_Identifiant(String identifiantPassager);
     List<Reservation> findByVol_NumeroVol(String numeroVol);
     List<Reservation> findByStatut(String statut);

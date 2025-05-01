@@ -22,13 +22,13 @@ public class PassagerController {
     @Autowired
     private VolRepository volRepository;
 
-    // Liste tous les passagers
+    
     @GetMapping
     public List<Passager> getAllPassagers() {
         return passagerRepository.findAll();
     }
 
-    // Recherche un passager par son identifiant
+    
     @GetMapping("/{id}")
     public ResponseEntity<Passager> getPassagerById(@PathVariable String id) {
         Optional<Passager> passager = passagerRepository.findById(id);
@@ -36,14 +36,14 @@ public class PassagerController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Crée un nouveau passager
+    
     @PostMapping
     public ResponseEntity<Passager> createPassager(@RequestBody Passager passager) {
         Passager nouveauPassager = passagerRepository.save(passager);
         return new ResponseEntity<>(nouveauPassager, HttpStatus.CREATED);
     }
 
-    // Met à jour un passager existant
+   
     @PutMapping("/{id}")
     public ResponseEntity<Passager> updatePassager(@PathVariable String id, @RequestBody Passager passagerDetails) {
         return passagerRepository.findById(id)
@@ -58,7 +58,7 @@ public class PassagerController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Supprime un passager
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePassager(@PathVariable String id) {
         return passagerRepository.findById(id)
@@ -69,7 +69,7 @@ public class PassagerController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Réserve un vol pour un passager
+    
     @PostMapping("/{passagerId}/reservations")
     public ResponseEntity<?> reserverVol(
             @PathVariable String passagerId,
@@ -96,7 +96,7 @@ public class PassagerController {
         return ResponseEntity.notFound().build();
     }
 
-    // Annule une réservation
+    
     @DeleteMapping("/{passagerId}/reservations/{reservationId}")
     public ResponseEntity<Void> annulerReservation(
             @PathVariable String passagerId,
